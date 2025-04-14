@@ -1,0 +1,61 @@
+from flask import Flask, request, jsonify
+import json
+import time
+import telepot
+import os
+
+app = Flask(__name__)
+
+# Telegram bot info
+TOKEN = '8039871699:AAFkfoZVBb0TZC9_AJoieqgLjNMumNso370'
+CHAT_ID = '6484324242'
+bot = telepot.Bot(TOKEN)
+
+# Load keys data from JSON file
+def load_keys():
+    try:
+        with open('keys.json', 'r') as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+# Save keys data to JSON file
+def save_keys(keys):
+    with open('keys.json', 'w') as file:
+        json.dump(keys, file)
+
+# Check if the key is valid and not expired
+@app.route('/check-key', methods=['GET'])
+def check_key():
+    key = request.args.get('key')
+    keys = load_keys()
+    current_time = int(time.time())
+
+    if key in keys:
+        expiration_time = keys[key]['expiration']
+        if expiration_time > current_time:
+            # Send IP to Telegram
+            user_ip = request.remote_addr
+            bot.sendMessage(CHAT_ID, f"Key: {key} is used. IP: {user_ip}, Expiration: {time.ctime(expiration_time)}")
+            return jsonify(valid=True)
+        else:
+            return jsonify(valid=False, message="Key has expired.")
+    else:
+        return jsonify(valid=False, message="Key not found.")
+
+# Add new key (Admin only)
+@app.route('/add-key', methods=['POST'])
+def add_key():
+    admin_password = os.getenv('ADMIN_PASSWORD', 'your_admin_password')  # Use environment variable
+    if request.form.get('admin_password') == admin_password:
+        key = request.form.get('key')
+        expiration = int(time.time()) + 7 * 24 * 60 * 60  # 7 days expiry
+        keys = load_keys()
+        keys[key] = {'expiration': expiration}
+        save_keys(keys)
+        return jsonify(message="Key added successfully"), 200
+    else:
+        return jsonify(message="Invalid password"), 403
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock Tool - Nhập Key</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nhập Key để unlock Tool</h2>
+        <input type="text" id="key" placeholder="Nhập Key..." />
+        <button onclick="checkKey()">Unlock</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        function checkKey() {
+            const key = document.getElementById('key').value;
+            const status = document.getElementById('status');
+            
+            // Thay thế 'https://your-server-url' bằng URL hợp lệ
+            fetch(`https://example.com/check-key?key=${key}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        status.textContent = "Key hợp lệ! Đang mở tool...";
+                        status.className = 'success';
+                    } else {
+                        status.textContent = "Key không hợp lệ hoặc đã hết hạn!";
+                        status.className = 'error';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    status.textContent = "Đã có lỗi xảy ra!";
+                    status.className = 'error';
+                });
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlock Tool - Nhập Key</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nhập Key để unlock Tool</h2>
+        <input type="text" id="key" placeholder="Nhập Key..." />
+        <button onclick="checkKey()">Unlock</button>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        function checkKey() {
+            const key = document.getElementById('key').value;
+            const status = document.getElementById('status');
+            
+            // Thay thế 'https://your-server-url' bằng URL hợp lệ
+            fetch(`https://example.com/check-key?key=${key}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        status.textContent = "Key hợp lệ! Đang mở tool...";
+                        status.className = 'success';
+                    } else {
+                        status.textContent = "Key không hợp lệ hoặc đã hết hạn!";
+                        status.className = 'error';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    status.textContent = "Đã có lỗi xảy ra!";
+                    status.className = 'error';
+                });
+        }
+    </script>
+</body>
+</html> 
